@@ -18,7 +18,11 @@ def generate_summarizer(max_tokens,temperature,top_p,frequency_penalty,prompt,):
     url = "https://chat-gpt-a1.openai.azure.com/openai/deployments/DanielChatGPT/chat/completions?api-version=2023-03-15-preview"
         
     headers = {'Content-Type': 'application/json', 
-               'api-key':api_key
+               'api-key':api_key,
+               'max_tokens':max_tokens,
+               'temperature':temperature,
+               'top_p':top_p,
+               'frequency_penalty':frequency_penalty
                }
     data = {'messages': [{"role": "system", "content": "You are a helpful assistant for text summarization."}, 
                          {"role": "user", "content": f"Summarize this: {prompt}"} ]}
