@@ -19,10 +19,10 @@ def generate_summarizer(max_tokens,temperature,top_p,frequency_penalty,prompt,):
         
     headers = {'Content-Type': 'application/json', 
                'api-key':api_key,
-               'max_tokens':max_tokens,
-               'temperature':temperature,
-               'top_p':top_p,
-               'frequency_penalty':frequency_penalty
+               'max_tokens':str(max_tokens),
+               'temperature':str(temperature),
+               'top_p':str(top_p),
+               'frequency_penalty':str(frequency_penalty)
                }
     data = {'messages': [{"role": "system", "content": "You are a helpful assistant for text summarization."}, 
                          {"role": "user", "content": f"Summarize this: {prompt}"} ]}
