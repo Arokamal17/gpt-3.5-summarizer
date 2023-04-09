@@ -13,7 +13,7 @@ api_key = "c09f91126e51468d88f57cb83a63ee36"
 
 
 
-def generate_summarizer(max_tokens,temperature,top_p,frequency_penalty,prompt,):
+def generate_summarizer(max_tokens,temperature,top_p,frequency_penalty,presence_penalty,prompt,):
     
     url = "https://chat-gpt-a1.openai.azure.com/openai/deployments/DanielChatGPT/chat/completions?api-version=2023-03-15-preview"
         
@@ -22,7 +22,8 @@ def generate_summarizer(max_tokens,temperature,top_p,frequency_penalty,prompt,):
                'max_tokens':str(max_tokens),
                'temperature':str(temperature),
                'top_p':str(top_p),
-               'frequency_penalty':str(frequency_penalty)
+               'frequency_penalty':str(frequency_penalty),
+               'Presence_penalty': str(presence_penalty)
                }
     data = {'messages': [{"role": "system", "content": "You are a helpful assistant for text summarization."}, 
                          {"role": "user", "content": f"Summarize this: {prompt}"} ]}
@@ -65,6 +66,8 @@ with col1:
                       max_value=1.0, value=0.5, step=0.01)
     f_pen = st.slider("Frequency Penalty", min_value=-1.0,
                       max_value=1.0, value=0.0, step=0.01)
+    p_pen = st.slider("Presence Penalty",min_value=0.0,
+                      max_value=2.0, value=0.0, step=0.01)
 
 
 #Showing the current parameter used for the model
@@ -74,7 +77,8 @@ with col3:
         st.write("Current Temperature :", temp)
         st.write("Current Top_p :", top_p)
         st.write("Current Frequency Penalty :", f_pen)
+        st.write("Current Presence Penalty :", p_pen)
 
 #Creating button for execute the text summarization
 if st.button("Summarize"):
-    st.write(generate_summarizer(token, temp, top_p, f_pen, input_text))
+    st.write(generate_summarizer(token, temp, top_p, f_pen, p_pen, input_text))
