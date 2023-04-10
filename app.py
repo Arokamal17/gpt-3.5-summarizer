@@ -59,7 +59,7 @@ col1, col2, col3 = st.columns(3)
 #Slider to control the model hyperparameter
 with col1:
     token = st.slider("Token", min_value=0.0,
-                      max_value=4096.0, value=50.0, step=1.0)
+                      max_value=516.0, value=50.0, step=1.0)
     temp = st.slider("Temperature", min_value=0.0,
                      max_value=1.0, value=0.0, step=0.01)
     top_p = st.slider("top_p", min_value=0.0,
