@@ -13,7 +13,7 @@ api_key = "c09f91126e51468d88f57cb83a63ee36"
 
 
 
-def generate_summarizer(max_tokens,temperature,top_p,frequency_penalty,presence_penalty,prompt,):
+def generate_summarizer(max_tokens,temperature,top_p,frequency_penalty,presence_penalty,prompt,person_type):
     
     url = "https://chat-gpt-a1.openai.azure.com/openai/deployments/DanielChatGPT/chat/completions?api-version=2023-03-15-preview"
         
@@ -26,7 +26,7 @@ def generate_summarizer(max_tokens,temperature,top_p,frequency_penalty,presence_
                'Presence_penalty': str(presence_penalty)
                }
     data = {'messages': [{"role": "system", "content": "You are a helpful assistant for text summarization."}, 
-                         {"role": "user", "content": f"Summarize this: {prompt}"} ]}
+                         {"role": "user", "content": f"Summarize this for {person_type}: {prompt}"} ]}
     body = str.encode(json.dumps(data))
     # res = openai.ChatCompletion.create(
     #     engine="DanielChatGPT",
@@ -68,6 +68,19 @@ with col1:
                       max_value=1.0, value=0.0, step=0.01)
     p_pen = st.slider("Presence Penalty",min_value=0.0,
                       max_value=2.0, value=0.0, step=0.01)
+    
+#Selection box to select the summarization style
+with col2:
+    option = st.selectbox(
+        "How do you like to be explained?",
+        (
+            "Second-Grader",
+            "Professional Data Scientist",
+            "Housewives",
+            "Retired",
+            "University Student",
+        ),
+    )
 
 
 #Showing the current parameter used for the model
@@ -81,4 +94,4 @@ with col3:
 
 #Creating button for execute the text summarization
 if st.button("Summarize"):
-    st.write(generate_summarizer(token, temp, top_p, f_pen, p_pen, input_text))
+    st.write(generate_summarizer(token, temp, top_p, f_pen, p_pen, input_text, option))
